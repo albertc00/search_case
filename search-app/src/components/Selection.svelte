@@ -85,7 +85,7 @@
     color: #777;
     font-family: 'Lato', sans-serif;
     min-width: 200px;
-    min-height: 50px;
+    min-height: 43px;
     margin: 0;
     width: 100%;
   }

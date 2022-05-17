@@ -39,7 +39,7 @@
   };
 </script>
 
-<SearchFormClose />
+<!-- <SearchFormClose /> -->
 
 <Query options={queryOptions}>
   <div slot="query" let:queryResult={{ data, isFetching, isError }}>
@@ -131,20 +131,6 @@
                         </div>
                       </div>
                       <div class="cs-content">
-                        <div class="cs-highlights">
-                          <h2>Highlights</h2>
-                          <ul>
-                            <li>
-                              {post.excerpt}
-                            </li>
-                            <li>
-                              {post.excerpt}
-                            </li>
-                            <li>
-                              {post.excerpt}
-                            </li>
-                          </ul>
-                        </div>
                         <div>
                           <h2>The Client</h2>
                           <p>
@@ -177,106 +163,12 @@
                             that enables digital insurance and enterprise level
                             core system insurance software.
                           </p>
-                          <h2>The Callbox Solution</h2>
-                          <p>
-                            <span style="font-weight: 400;"
-                              >Callbox designed an Account-based Marketing Lead
-                              Generation &amp; Appointment Setting campaign
-                              which consisted of:</span
-                            >
-                          </p>
-                          <ul>
-                            <li>
-                              Account-Based Multi-Channel Lead Management via
-                              Voice, Email, Chat, Web, Social Media, and Webinar
-                            </li>
-                            <li>
-                              Sales Enablement &amp; Support which included
-                              Product Training, Account Setup, and Back Office
-                              Sales Support
-                            </li>
-                            <li>
-                              Tools &amp; Subscriptions to the Callbox Pipeline
-                              and HubSpot CRM
-                            </li>
-                            <li>
-                              Account Management with Strategy Building,
-                              Reporting, and Product Knowledge
-                            </li>
-                          </ul>
-                          <h3>The Goals</h3>
-                          <ul>
-                            <li style="font-weight: 400;" aria-level="1">
-                              <span style="font-weight: 400;"
-                                >The Callbox team was to run a lead generation
-                                program and promote the Client’s insurance
-                                platforms</span
-                              >
-                            </li>
-                            <li style="font-weight: 400;" aria-level="1">
-                              <span style="font-weight: 400;"
-                                >Uncover opportunities for the Client’s digital
-                                insurance platform for the North American market</span
-                              >
-                            </li>
-                            <li style="font-weight: 400;" aria-level="1">
-                              <span style="font-weight: 400;"
-                                >Book appointments with decision makers for the
-                                Client’s consultants</span
-                              >
-                            </li>
-                          </ul>
-                          <p>Below is the two-step campaign process:</p>
-                          <h3>Account Research and Selection</h3>
-                          <ol>
-                            <li>
-                              The Client specified their target industries,
-                              location, and decision makers
-                            </li>
-                            <li>
-                              Callbox refined the Client’s ideal customer
-                              profile (ICP) which served as a basis for
-                              identifying qualified accounts
-                            </li>
-                            <li>
-                              Callbox came up with a list of potential contacts
-                              to target, which was reviewed and approved by the
-                              Client
-                            </li>
-                          </ol>
-                          <h3>Account and Prospect Profiling</h3>
-                          <ol>
-                            <li>
-                              The Client provided buyer persona profiles of the
-                              prospects that they want the outbound campaign to
-                              target. The profiles consisted of detailed
-                              demographic and firmographic segmentations.
-                            </li>
-                            <li>
-                              The buyer personas identified as the campaign’s
-                              primary targets were CIO, CTO, Product Manager,
-                              Claims Manager, Lead Technical Architect, Digital
-                              Officer, Underwriting Manager, Chief Operating
-                              Officer.
-                            </li>
-                            <li>
-                              The master contact list was segmented based on
-                              these personas, and was further grouped according
-                              to industry type.
-                            </li>
-                          </ol>
-                          <h2>Results</h2>
-                          <p>
-                            The six-month Account-based Marketing Lead
-                            Generation &amp; Appointment Setting campaign
-                            generated 88 Sales Qualified Leads, 68 Marketing
-                            Qualified Leads, 651 Profiled Contacts, and 1,485
-                            Social Media Connections.
-                          </p>
                         </div>
                       </div>
                     </div>
-                    <a class="pdf-button" href={post.pdf}>DOWNLOAD PDF</a>
+                    <div class="btn-btm">
+                      <a class="pdf-button" href={post.pdf}>DOWNLOAD PDF</a>
+                    </div>
                   </article>
                 </div>
               </div>
@@ -352,9 +244,12 @@
     line-height: 2.25rem;
     margin: 0 0 2rem;
   }
+  .btn-btm {
+    text-align: center;
+  }
   .pdf-button {
     display: inline-block;
-    width: auto;
+    width: 100%;
     padding: 1rem 1.25rem;
     font-size: 1rem;
     line-height: 1.5rem;
@@ -375,7 +270,7 @@
     color: #fff;
     border-color: unset;
     outline: 0;
-    max-width: 100%;
+    max-width: 150px;
   }
   .pdf-button:hover {
     color: #fff;
@@ -413,7 +308,7 @@
     display: grid;
   }
   .cs-hero {
-    height: 40vh;
+    height: 35vh;
     padding: calc(15vh / 2 - 1.125rem) 0 0;
     letter-spacing: 0.05em;
     background-color: #063060;
@@ -449,5 +344,6 @@
   .container {
     padding-right: calc(1280px / 12);
     padding-left: calc(1280px / 12);
+    background-color: #f7f7f7;
   }
 </style>

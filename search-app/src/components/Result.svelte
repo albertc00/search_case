@@ -38,6 +38,8 @@
   import { onMount } from 'svelte';
   let box;
   let yTop = 0;
+  let yHeight;
+  let yScroll;
 
   function parseScroll() {
     yTop = box.scrollTop;
@@ -50,10 +52,21 @@
 
 <div id="selection" class="modal">
   <Modal show={$modal}>
-    <button class="modal-button" on:click={showModal}>Show modal</button>
+    <button class="modal-button" on:click={showModal}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="#014e89"
+        height="30"
+        width="35"
+        viewBox="-5 7 55 35"
+        ><path
+          d="M9 39H11.2L35.45 14.75L34.35 13.65L33.25 12.55L9 36.8ZM6 42V35.6L35.4 6.2Q36.25 5.35 37.525 5.375Q38.8 5.4 39.65 6.25L41.8 8.4Q42.65 9.25 42.65 10.5Q42.65 11.75 41.8 12.6L12.4 42ZM39.5 10.45 37.45 8.4ZM35.45 14.75 34.35 13.65 33.25 12.55 35.45 14.75Z"
+        /></svg
+      >
+      <span class="modal-text">Edit Columns</span>
+    </button>
   </Modal>
 </div>
-
 <Query options={queryOptions}>
   <div slot="query" let:queryResult={{ data, isFetching, isError }}>
     <div class="cntnr">
@@ -73,6 +86,23 @@
         {:else if isError}
           <span>Error</span>
         {:else if data?.length}
+          <div class="table-container">
+            <div
+              class="table-wrapper"
+              class:tableScrolled={yTop > 50}
+              bind:this={box}
+              on:scroll={parseScroll}
+              on:mousemove={parseScroll}
+            >
+              <!-- this is table -->
+              <Table
+                tableData={data}
+                tableheaderData={col}
+                tableheader={$cols}
+              />
+              <!-- table helloworld -->
+            </div>
+          </div>
           <div class="area-2">
             <LightPaginationNav
               totalItems={data[0].total}
@@ -82,79 +112,50 @@
               on:setPage={(e) => ($pages = e.detail.page)}
             />
           </div>
-
-          <div
-            class="table-wrapper"
-            class:tableScrolled={yTop > 50}
-            bind:this={box}
-            on:scroll={parseScroll}
-            on:mousemove={parseScroll}
-          >
-            <!-- this is table -->
-            <Table tableData={data} tableheaderData={col} tableheader={$cols} />
-            <!-- table helloworld -->
-          </div>
         {/if}
       </div>
     </div>
   </div>
 </Query>
 
-<!-- 
-<Query options={queryOptions}>
-  <div slot="query" let:queryResult={{ data, isFetching, isError }}>
-    <div class="cntnr">
-      <div class="results svelte-fhxlyi">
-        {#if isFetching}
-          <h2>Loading...</h2>
-        {:else if isError}
-          <span>Error</span>
-        {:else if data?.length}
-          <h3>{data[0].label}</h3>
-          {#if $selection > 0}
-            <div class="area-4">
-              <LightPaginationNav
-                totalItems={data[0].total}
-                pageSize={10}
-                currentPage={page}
-                limit={1}
-                on:setPage={(e) => (page = e.detail.page)}
-              />
-            </div>
-          {/if}
-          <div
-            class="table-wrapper"
-            class:tableScrolled={yTop > 50}
-            bind:this={box}
-            on:scroll={parseScroll}
-            on:mousemove={parseScroll}
-          >
-            <Table tableData={data} tableheaderData={col} tableheader={$cols} />
-          </div>
-        {/if}
-      </div>
-    </div>
-  </div>
-</Query> -->
 <style>
+  .modal-button {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr;
+    padding-top: 20px;
+    align-items: center;
+  }
+  .modal-text {
+    color: #014e89;
+    font-family: 'open Sans', sans-serif;
+    font-weight: 650;
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+
+  .table-container {
+    overflow: auto;
+    max-width: 75rem;
+    width: 100%;
+    padding-left: 2.5rem;
+  }
+
   .table-wrapper {
     overflow: scroll;
     max-width: 1280px;
-    max-height: 62vh;
+    max-height: 72vh;
     margin: 0 auto;
   }
+
   .loading {
     padding-top: 55px;
   }
   .modal {
-    padding-left: 20px;
-  }
-  .modal-button {
     padding: 10px;
+    padding-left: 66.5rem;
+    padding-top: 50px;
   }
-  .cntnr {
-    padding-top: 30px;
-  }
+
   button.modal-button {
     background-color: #ffca09;
     border: 1px solid #ffca09;
@@ -163,7 +164,7 @@
     font-weight: 600;
     letter-spacing: 0.0375rem;
     line-height: unset;
-    padding: 0.75rem 1.25rem;
+    padding: 0.3rem 0.6rem;
     transition: all 0.3s;
     text-transform: uppercase;
   }
@@ -175,9 +176,9 @@
 
   .area-2 {
     grid-column-start: 2;
-    padding-left: 0;
     display: flex;
-    justify-content: flex-end;
-    padding: 10px;
+    justify-content: flex-start;
+    padding-top: 10px;
+    padding-left: 20px;
   }
 </style>

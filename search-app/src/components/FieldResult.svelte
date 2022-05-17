@@ -66,6 +66,7 @@
   onMount(async () => parseScroll());
 
   import Table from './Table.svelte';
+  import SearchForm from './SearchForm.svelte';
 </script>
 
 <svelte:head>
@@ -86,14 +87,29 @@ const data = await res.json();
 
 return data; -->
 
-<SearchFormClose />
+<!-- <SearchFormClose /> -->
 
-<div id="selection">
-  <Selection />
-
-  <Modal show={$modal}>
-    <button class="modal-button" on:click={showModal}>Show modal</button>
-  </Modal>
+<div class="modal-wrapper">
+  <div class="modal">
+    <Selection />
+  </div>
+  <div class="dropdwn-selection">
+    <Modal show={$modal}>
+      <button class="modal-button" on:click={showModal}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#014e89"
+          height="30"
+          width="35"
+          viewBox="-5 7 55 35"
+          ><path
+            d="M9 39H11.2L35.45 14.75L34.35 13.65L33.25 12.55L9 36.8ZM6 42V35.6L35.4 6.2Q36.25 5.35 37.525 5.375Q38.8 5.4 39.65 6.25L41.8 8.4Q42.65 9.25 42.65 10.5Q42.65 11.75 41.8 12.6L12.4 42ZM39.5 10.45 37.45 8.4ZM35.45 14.75 34.35 13.65 33.25 12.55 35.45 14.75Z"
+          /></svg
+        >
+        <span class="modal-text">Edit Columns</span>
+      </button>
+    </Modal>
+  </div>
 </div>
 
 <Query options={queryOptions}>
@@ -116,9 +132,27 @@ return data; -->
         {:else if isError}
           <span>Error</span>
         {:else if data?.length}
-          <h3>{data[0].label}</h3>
+          <h2 class="table-label">{data[0].label}</h2>
+
+          <div class="table-container">
+            <div
+              class="table-wrapper"
+              class:tableScrolled={yTop > 50}
+              bind:this={box}
+              on:scroll={parseScroll}
+              on:mousemove={parseScroll}
+            >
+              <!-- this is table -->
+              <Table
+                tableData={data}
+                tableheaderData={col}
+                tableheader={$cols}
+              />
+              <!-- table helloworld -->
+            </div>
+          </div>
           {#if $selection > 0}
-            <div class="area-4">
+            <div class="area-2">
               <LightPaginationNav
                 totalItems={data[0].total}
                 pageSize={10}
@@ -128,17 +162,6 @@ return data; -->
               />
             </div>
           {/if}
-          <div
-            class="table-wrapper"
-            class:tableScrolled={yTop > 50}
-            bind:this={box}
-            on:scroll={parseScroll}
-            on:mousemove={parseScroll}
-          >
-            <!-- this is table -->
-            <Table tableData={data} tableheaderData={col} tableheader={$cols} />
-            <!-- table helloworld -->
-          </div>
         {:else}
           <NoResult />
         {/if}
@@ -219,12 +242,39 @@ return data; -->
     line-height: 2.75rem;
     text-align: center;
   }
+  .cntnr {
+    position: relative;
+  }
+  .table-label {
+    position: absolute;
+    top: -5.6rem;
+    left: 2.5rem;
+    font-family: 'open Sans', sans-serif;
+    font-weight: 650;
+    font-size: 2rem;
+  }
+  .modal {
+    padding: 10px;
+    padding-left: 53rem;
+    padding-top: 50px;
+  }
   .loading {
     padding-top: 55px;
   }
-  .cntnr {
-    padding-top: 30px;
+  .modal-button {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr;
+    padding-top: 20px;
+    align-items: center;
   }
+  .modal-text {
+    color: #014e89;
+    font-family: 'open Sans', sans-serif;
+    font-weight: 650;
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+
   .hide {
     display: none;
     position: absolute;
@@ -282,15 +332,23 @@ return data; -->
     padding: 10px 0;
   }
 
+  .table-container {
+    overflow: auto;
+    max-width: 75rem;
+    width: 100%;
+    padding-left: 2.5rem;
+  }
+
   .table-wrapper {
     overflow: scroll;
     max-width: 1280px;
-    max-height: 60vh;
+    max-height: 75vh;
     margin: 0 auto;
   }
-  .modal-button {
-    padding: 10px;
-  }
+  /* .table-wrapper::-webkit-scrollbar {
+    display: none;
+  } */
+
   th {
     color: #fff;
     background-color: #fff;
@@ -329,7 +387,7 @@ return data; -->
     font-weight: 600;
     letter-spacing: 0.0375rem;
     line-height: unset;
-    padding: 0.75rem 1.25rem;
+    padding: 0.3rem 0.6rem;
     transition: all 0.3s;
     text-transform: uppercase;
   }
@@ -338,11 +396,12 @@ return data; -->
     background-color: unset;
     cursor: pointer;
   }
-  #selection {
+  .modal-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1rem;
-    max-width: max-content;
-    margin: 2rem auto 0;
+    grid-template-columns: 0.85fr 1fr;
+  }
+  .dropdwn-selection {
+    padding-top: 49px;
+    max-width: 200px;
   }
 </style>

@@ -186,73 +186,96 @@
   }
 </script>
 
-{#each tableData as { posts, id } (id)}
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        {#each tableheaderData as { id, label } (id)}
-          {#each tableheader as colsID}
-            {#if colsID == id}
-              <th>{label}</th>
-            {/if}
-          {/each}
-        {/each}
-      </tr>
-    </thead>
-    <tbody>
-      {#each posts as post (post.id)}
+<div class="table-wrapper">
+  {#each tableData as { posts, id } (id)}
+    <table>
+      <thead>
         <tr>
-          <td
-            >{post.title}
-            <button class="hide" on:click={() => onClick(post.id)}>
-              Preview
-            </button></td
-          >
-          {#each tableheader as colsID}
-            {#if colsID == 'client-location'}
-              <td>{post.clientLocation}</td>
-            {:else if colsID == 'product'}
-              <td>{post.product}</td>
-            {:else if colsID == 'campaign'}
-              <td>
-                {#each post.campaign as { label }}<span>{label}</span>
-                {/each}
-              </td>
-            {:else if colsID == 'link'}
-              <td>{post.link}</td>
-            {:else if colsID == 'linkUnlocked'}
-              <td
-                ><a class="cs_linkunlock" href={post.linkUnlocked}
-                  >Click here to subscribe
-                </a>
-              </td>
-            {:else if colsID == 'pdf'}
-              <td>{post.pdf}</td>
-            {:else if colsID == 'clientHQ'}
-              <td>{post.clientHQ}</td>
-            {:else if colsID == 'target-location'}
-              <td>{post.targetLocation}</td>
-            {:else if colsID == 'target-industry'}
-              <td>{post.targetIndustry}</td>
-            {:else if colsID == 'target-dm'}
-              <td>{post.targetDM}</td>
-            {:else if colsID == 'results'}
-              <td>
-                {#each post.results as { label }}
-                  <span>{label}</span>
-                {/each}</td
-              >
-            {/if}
+          <th>Title</th>
+          {#each tableheaderData as { id, label } (id)}
+            {#each tableheader as colsID}
+              {#if colsID == id}
+                <th>{label}</th>
+              {/if}
+            {/each}
           {/each}
         </tr>
-      {/each}
-    </tbody>
-  </table>
-{/each}
+      </thead>
+      <tbody>
+        {#each posts as post (post.id)}
+          <tr>
+            <td
+              >{post.title}
+              <button
+                class="hide"
+                class:btn-repo={tableheader.length >= 3}
+                on:click={() => onClick(post.id)}
+              >
+                Preview
+              </button></td
+            >
+            {#each tableheader as colsID}
+              {#if colsID == 'client-location'}
+                <td>{post.clientLocation}</td>
+              {:else if colsID == 'product'}
+                <td>{post.product}</td>
+              {:else if colsID == 'campaign'}
+                <td>
+                  {#each post.campaign as { label }}<span>{label}</span>
+                  {/each}
+                </td>
+              {:else if colsID == 'link'}
+                <td><a href={post.link}>{post.link}</a></td>
+              {:else if colsID == 'linkUnlocked'}
+                <td
+                  ><div class="link-unlock">
+                    <a class="cs_linkunlock" href={post.linkUnlocked}
+                      >See full-version
+                    </a>
+                  </div>
+                </td>
+              {:else if colsID == 'pdf'}
+                <td><a href={post.pdf}>{post.pdf}</a></td>
+              {:else if colsID == 'clientHQ'}
+                <td>{post.clientHQ}</td>
+              {:else if colsID == 'target-location'}
+                <td>{post.targetLocation}</td>
+              {:else if colsID == 'target-industry'}
+                <td>{post.targetIndustry}</td>
+              {:else if colsID == 'target-dm'}
+                <td>{post.targetDM}</td>
+              {:else if colsID == 'results'}
+                <td>
+                  {#each post.results as { label }}
+                    <span>{label}</span>
+                  {/each}</td
+                >
+              {/if}
+            {/each}
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {/each}
+</div>
 
 <style>
   .hide {
+    display: none;
+
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid #014e89;
+    color: #014e89;
+    border-radius: 0.25rem;
+    padding: 0.525rem 1.05rem;
+    background-color: transparent;
+    font-weight: 600;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    left: 0;
+  }
+  .hide.btn-repo {
     display: none;
     position: absolute;
     margin: 10px;
@@ -265,6 +288,7 @@
     background-color: transparent;
     font-weight: 600;
     transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    left: 0;
   }
   .hide:hover {
     text-decoration: none;
@@ -272,7 +296,16 @@
     color: #fff;
   }
 
+  .hide.btn-repo:hover {
+    text-decoration: none;
+    background-color: #014e89;
+    color: #fff;
+  }
+
   tr:hover .hide {
+    display: inline-block;
+  }
+  tr:hover .hide.btn-repo {
     display: block;
   }
   table,
@@ -317,19 +350,25 @@
     text-align: center;
   }
   .cs_linkunlock {
-    display: inline-block;
-    width: auto;
-    padding: 0.75rem 1.25rem;
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-    font-family: 'Work Sans', work-sans, sans-serif;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    background-color: #ffca09;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid #014e89;
     color: #014e89;
     border-radius: 0.25rem;
-    cursor: pointer;
+    padding: 0.525rem 1.05rem;
+    background-color: transparent;
+    font-weight: 600;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    text-decoration: none;
+  }
+  .link-unlock {
+    text-align: center;
+  }
+  .cs_linkunlock:hover {
+    text-decoration: none;
+    background-color: #014e89;
+    color: #fff;
   }
   .tableScrolled table thead {
     position: sticky;

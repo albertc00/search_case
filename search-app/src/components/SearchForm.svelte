@@ -6,61 +6,116 @@
     $isSearching = true;
     $fields = $fields;
   }
+  function dropdown() {}
+
+  import Modal, { bind } from 'svelte-simple-modal';
+  import { writable } from 'svelte/store';
+  import Filter from './modal/Filter.svelte';
+  const modal = writable(null);
+  const showModal = () => modal.set(bind(Filter));
 </script>
 
-<form class="form" on:submit|preventDefault={handleOnSubmit}>
-  <div class="wrapper svelte-iqmikt">
-    <input
-      class="searchBox svelte-iqmikt"
-      type="search"
-      name="search"
-      spellcheck="true"
-      placeholder="Type keywords to find case studies"
-      aria-label="Search case studies"
-      bind:value={$SearchTerm}
-      required
-    />
-
-    <button
-      class="button svelte-iqmikt"
-      disabled={$SearchTerm === ''}
-      type="submit"
-      aria-label="Start search"
-      title="Click to search"
+<div class="wrapper-spacer" />
+<div class="wrapper-bar">
+  <Modal show={$modal}>
+    <button class="menubar" on:click={showModal} aria-label="Start search"
       ><svg
-        class="icon"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="black"
-        width="24px"
-        height="24px"
-        ><path d="M0 0h24v24H0z" fill="none" /><path
-          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-        /></svg
+        height="48"
+        width="48"
+        fill="#fff"
+        ><path d="M6 36V33H42V36ZM6 25.5V22.5H42V25.5ZM6 15V12H42V15Z" /></svg
       ></button
     >
-    <ul class="checbox-filters">
-      {#each selects as { n, id, label } (id)}
-        <li class="check-svelte">
-          <input
-            class="checkbox-svelte"
-            type="checkbox"
-            bind:group={$fields}
-            value={n}
-          />
-          <label class="checkbox-label" for={id}> {label} </label>
-        </li>
-      {/each}
-    </ul>
-  </div>
-</form>
+  </Modal>
+  <form class="form" on:submit|preventDefault={handleOnSubmit}>
+    <div class="wrapper svelte-iqmikt">
+      <input
+        class="searchBox svelte-iqmikt"
+        type="search"
+        name="search"
+        spellcheck="true"
+        placeholder="           Search"
+        aria-label="Search case studies"
+        bind:value={$SearchTerm}
+        required
+      />
+
+      <button
+        class="button svelte-iqmikt"
+        disabled={$SearchTerm === ''}
+        type="submit"
+        aria-label="Start search"
+        title="Click to search"
+        ><svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="black"
+          width="24px"
+          height="24px"
+          ><path d="M0 0h24v24H0z" fill="none" /><path
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          /></svg
+        ></button
+      >
+    </div>
+    <!-- dropdown -->
+
+    <!-- <div class="dropdown">
+      <ul class="checbox-filters">
+        {#each selects as { n, id, label } (id)}
+          <li class="check-svelte">
+            <input
+              class="checkbox-svelte"
+              type="checkbox"
+              bind:group={$fields}
+              value={n}
+            />
+            <label class="checkbox-label" for={id}> {label} </label>
+          </li>
+        {/each}
+      </ul>
+    </div> -->
+    <!-- dropdown -->
+  </form>
+</div>
 
 <style>
+  .wrapper-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    padding: 0;
+  }
+  .menubar {
+    background: none;
+    border: 0;
+
+    cursor: pointer;
+  }
+  /* .menubar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    height: 2.875rem;
+    width: 2.875rem;
+    padding: 0;
+    background: none;
+    border: 0 none;
+    border-radius: 0 0.375rem 0.375rem 0;
+    padding: 0.6875rem;
+    cursor: pointer;
+  } */
+  .menubar > svg > rect {
+    fill: white;
+  }
   .checbox-filters {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 0;
   }
+
   .check-svelte {
     padding-left: 20px;
 
@@ -118,7 +173,8 @@
   }
 
   .form {
-    width: 640px;
+    min-width: 450px;
+    width: 100%;
     margin: 0 auto;
     padding: 10px;
   }
@@ -155,6 +211,7 @@
   .button.svelte-iqmikt:disabled {
     cursor: not-allowed;
   }
+
   .button.svelte-iqmikt:disabled > svg {
     fill: #c4cbcf;
   }
