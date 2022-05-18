@@ -94,47 +94,6 @@
 </div>
 
 <style>
-  h2 {
-    font-family: 'Work Sans', work-sans, sans-serif;
-    font-weight: 700;
-    margin: 0;
-    padding: 0;
-    color: #014e89;
-  }
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .cs-content {
-    display: grid;
-    row-gap: 3rem;
-  }
-  .cs-campaign {
-    display: grid;
-    row-gap: 3rem;
-  }
-  .cs-specs-label {
-    font-family: 'Work Sans', work-sans, sans-serif;
-    font-weight: 700;
-    color: #5f7380;
-    margin: 0.25rem 0;
-  }
-  .cs-specs-post {
-    font-size: 0.975rem;
-    line-height: 1.5rem;
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
-    color: #5f7380;
-  }
-  .cs-highlights {
-    padding: 1.5rem;
-    border: 1px solid #f76823;
-    border-radius: 0.875rem;
-    width: auto;
-    margin-left: 0;
-    background-color: rgba(247, 104, 35, 0.07);
-  }
   .cs-specs {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     display: grid;
@@ -157,61 +116,13 @@
     line-height: 2.25rem;
     margin: 0 0 2rem;
   }
-  .pdf-button {
-    display: inline-block;
-    width: auto;
-    padding: 1rem 1.25rem;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-family: 'Work Sans', work-sans, sans-serif;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    background-color: #ffca09;
-    color: #014e89;
-    border-radius: 0.25rem;
-    box-shadow: 0px 8px 9px -6px rgb(95 115 128 / 44%);
-    cursor: pointer;
-    transition: all 300ms ease 0ms;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    font-family: 'Work Sans', work-sans, sans-serif;
-    background-color: #fa450e;
-    color: #fff;
-    border-color: unset;
-    outline: 0;
-    max-width: 100%;
-  }
-  .pdf-button:hover {
-    color: #fff;
-    text-decoration: none;
-    box-shadow: 0px 13px 9px -6px rgb(95 115 128 / 44%);
-    transform: translateX(0px) translateY(-5px);
-  }
+
   .cs-results {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1.5rem;
     display: grid;
   }
-  .cs-result {
-    padding: 2rem;
-    border: 1px solid #14b37d;
-    border-radius: 0.875rem;
-    color: #14b37d;
-    text-align: center;
-    transition: background-color 0.3s linear;
-    display: grid;
-    row-gap: 0.375rem;
-    align-content: center;
-  }
-  .cs-result-label {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-  .cs-result-value {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
+
   .cs-entry {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;

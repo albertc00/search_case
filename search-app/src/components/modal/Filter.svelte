@@ -17,6 +17,7 @@
   }
 </script>
 
+<h2>Select Filter for Search</h2>
 <div class="dropdown">
   <ul class="checbox-filters">
     {#each selects as { n, id, label } (id)}

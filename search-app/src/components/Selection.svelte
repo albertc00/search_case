@@ -67,7 +67,7 @@
     color: #181818;
     margin: 0;
     width: 100%;
-    /* display: block; */
+
     margin-bottom: 5px;
   }
 

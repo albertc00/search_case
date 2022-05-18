@@ -1,14 +1,12 @@
 <script>
-  import { selects } from './selection.js';
   import { isSearching, SearchTerm, fields } from './store';
 
   function handleOnSubmit() {
     $isSearching = true;
     $fields = $fields;
   }
-  function dropdown() {}
 
-  import Modal, { bind } from 'svelte-simple-modal';
+  import Modal, { bind } from './modal/index.js';
   import { writable } from 'svelte/store';
   import Filter from './modal/Filter.svelte';
   const modal = writable(null);
@@ -21,12 +19,14 @@
     <button class="menubar" on:click={showModal} aria-label="Start search"
       ><svg
         xmlns="http://www.w3.org/2000/svg"
+        fill="#fff"
         height="48"
         width="48"
-        fill="#fff"
-        ><path d="M6 36V33H42V36ZM6 25.5V22.5H42V25.5ZM6 15V12H42V15Z" /></svg
-      ></button
-    >
+        ><path
+          d="M20.5 35.5V33.25H27.5V35.5ZM6.5 14V11.75H41.5V14ZM12.5 24.75V22.5H35.5V24.75Z"
+        /></svg
+      >
+    </button>
   </Modal>
   <form class="form" on:submit|preventDefault={handleOnSubmit}>
     <div class="wrapper svelte-iqmikt">
@@ -35,7 +35,6 @@
         type="search"
         name="search"
         spellcheck="true"
-        placeholder="           Search"
         aria-label="Search case studies"
         bind:value={$SearchTerm}
         required
@@ -84,7 +83,8 @@
 <style>
   .wrapper-bar {
     display: grid;
-    grid-template-columns: repeat(2, 100px);
+    grid-template-columns: max-content 370px;
+    align-items: center;
     padding: 0;
   }
   .menubar {
@@ -93,89 +93,11 @@
 
     cursor: pointer;
   }
-  /* .menubar {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-    height: 2.875rem;
-    width: 2.875rem;
-    padding: 0;
-    background: none;
-    border: 0 none;
-    border-radius: 0 0.375rem 0.375rem 0;
-    padding: 0.6875rem;
-    cursor: pointer;
-  } */
-  .menubar > svg > rect {
-    fill: white;
-  }
-  .checbox-filters {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0;
-  }
-
-  .check-svelte {
-    padding-left: 20px;
-
-    font-size: 16px;
-  }
-  form ul li {
-    display: flex;
-    align-items: center;
-  }
-
-  .checkbox-svelte {
-    -webkit-appearance: none;
-    background-color: #fafafa;
-    border: 1px solid #cacece;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-      inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-    padding: 8px;
-    border-radius: 3px;
-    display: inline-block;
-    position: relative;
-  }
-  .checkbox-svelte:active,
-  .checkbox-svelte:checked:active {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-      inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  .checkbox-svelte:checked {
-    background-color: #e9ecee;
-    border: 1px solid #adb8c0;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-      inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05),
-      inset 15px 10px -12px rgba(255, 255, 255, 0.1);
-    color: #99a1a7;
-  }
-  .checkbox-svelte:checked:after {
-    content: '\2714';
-
-    font-size: 18px;
-    position: absolute;
-    top: -4px;
-    left: 1px;
-
-    color: #4e4e4e;
-  }
-  .checkbox-svelte:hover {
-    transform: scale(1.2, 1.2);
-  }
-  .checkbox-label {
-    font-family: 'Work Sans', work-sans, sans-serif;
-    font-size: 1.15rem;
-    line-height: 1.2rem;
-    padding: 8px;
-    color: #1f1f1f;
-  }
 
   .form {
-    min-width: 450px;
+    max-width: 350px;
     width: 100%;
-    margin: 0 auto;
+
     padding: 10px;
   }
   .wrapper.svelte-iqmikt {

@@ -1,19 +1,19 @@
 <script>
   import Selection from './Selection.svelte';
-  import SearchFormClose from './SearchFormClose.svelte';
   import { Query } from '@sveltestack/svelte-query';
-  import { SearchTerm, selection, fields, cols, pages } from './store';
+  import { SearchTerm, selection, fields, cols, pages, fieldID } from './store';
   import { col } from './SelectColumn';
   import { LightPaginationNav } from './pagination/index.js';
   import NoResult from './NoResult.svelte';
-  import { writable } from 'svelte/store';
-  import Modal, { bind } from 'svelte-simple-modal';
-  import Popup from './modal/Popup.svelte';
   import TableLoading from './TableLoading.svelte';
   import Skeleton from 'svelte-skeleton/Skeleton.svelte';
 
-  const modal = writable(null);
+  import Modal, { bind } from './modal/index.js';
+  import { writable } from 'svelte/store';
+  import ViewResult from './ViewResult.svelte';
+  import Popup from './modal/Popup.svelte';
   const showModal = () => modal.set(bind(Popup));
+  const modal = writable(null);
 
   let page = 1;
   let s;
@@ -38,7 +38,7 @@
       );
 
       const data = await res.json();
-      console.log(data);
+
       return data;
     }
   }
@@ -66,7 +66,6 @@
   onMount(async () => parseScroll());
 
   import Table from './Table.svelte';
-  import SearchForm from './SearchForm.svelte';
 </script>
 
 <svelte:head>
@@ -88,7 +87,9 @@ const data = await res.json();
 return data; -->
 
 <!-- <SearchFormClose /> -->
-
+{#if $fieldID > 0}
+  <Modal show={modal.set(bind(ViewResult))} />
+{/if}
 <div class="modal-wrapper">
   <div class="modal">
     <Selection />
@@ -170,69 +171,6 @@ return data; -->
   </div>
 </Query>
 
-<!-- {#each data as { posts, id } (id)}
-<table>
-  <thead>
-    <tr>
-      <th>Title </th>
-  
-      {#each col as { id, label } (id)}
-        {#each $cols as colsID}
-          {#if colsID == id}
-            <th>{label} </th>
-          {/if}
-        {/each}
-      {/each}
-    </tr>
-  </thead>
-  <tbody>
-    {#each posts as post (post.id)}
-      <tr>
-        <td
-          >{post.title}
-          <button class="hide" on:click={() => onClick(post.id)}>
-            show
-          </button></td
-        >
-        {#each $cols as colsID}
-          {#if colsID == 'client-location'}
-            <td>{post.clientLocation}</td>
-          {:else if colsID == 'product'}
-            <td>{post.product}</td>
-          {:else if colsID == 'campaign'}
-            <td>
-              {#each post.campaign as { label }}<span
-                  >{label}</span
-                >
-              {/each}
-            </td>
-          {:else if colsID == 'link'}
-            <td>{post.link}</td>
-          {:else if colsID == 'linkUnlocked'}
-            <td>{post.linkUnlocked}</td>
-          {:else if colsID == 'pdf'}
-            <td>{post.pdf}</td>
-          {:else if colsID == 'clientHQ'}
-            <td>{post.clientHQ}</td>
-          {:else if colsID == 'target-location'}
-            <td>{post.targetLocation}</td>
-          {:else if colsID == 'target-industry'}
-            <td>{post.targetIndustry}</td>
-          {:else if colsID == 'target-dm'}
-            <td>{post.targetDM}</td>
-          {:else if colsID == 'results'}
-            <td>
-              {#each post.results as { label }}
-                <span>{label}</span>
-              {/each}</td
-            >
-          {/if}
-        {/each}
-      </tr>
-    {/each}
-  </tbody>
-</table>
-{/each} -->
 <style>
   h3 {
     font-family: 'Work Sans', sans-serif;
@@ -275,110 +213,27 @@ return data; -->
     text-transform: capitalize;
   }
 
-  .hide {
-    display: none;
-    position: absolute;
-    bottom: 20px;
-    background-color: #ffca09;
-    border: 1px solid #ffca09;
-    border-radius: 0.25rem;
-    color: #004b84;
-    text-transform: capitalize;
-    padding: 0.175rem 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .hide:hover {
-    background-color: transparent;
-  }
-
-  tr:hover .hide {
-    display: block;
-  }
-  table,
-  td {
-    border: 1px solid rgb(199, 198, 198);
-    border-collapse: collapse;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-    position: relative;
-  }
-  th {
-    background-color: #014e89;
-    color: white;
-    border: 1px solid rgb(199, 198, 198);
-    border-collapse: collapse;
-    margin-bottom: 10px;
-    padding: 10px;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.15rem;
-    line-height: 1.2rem;
-  }
-  tr:hover {
-    background-color: #f1efef;
-  }
-  td {
-    font-family: 'Work Sans', sans-serif;
-    letter-spacing: initial;
-  }
-
-  .area-4 {
-    color: #1d1d1d;
-    padding-left: 0;
+  .area-2 {
+    grid-column-start: 2;
     display: flex;
-    justify-content: flex-end;
-    padding: 10px 0;
+    justify-content: flex-start;
+    padding-top: 10px;
+    padding-left: 20px;
   }
 
   .table-container {
     overflow: auto;
-    max-width: 75rem;
     width: 100%;
-    padding-left: 2.5rem;
+    margin: auto;
   }
 
   .table-wrapper {
     overflow: scroll;
-    max-width: 1280px;
-    max-height: 75vh;
+    width: 95vw;
+    max-height: 69vh;
     margin: 0 auto;
   }
-  /* .table-wrapper::-webkit-scrollbar {
-    display: none;
-  } */
 
-  th {
-    color: #fff;
-    background-color: #fff;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    font-family: 'Work Sans', sans-serif;
-    letter-spacing: 0.1px;
-    padding: 15px 25px;
-    min-width: 200px;
-    text-align: center;
-  }
-  .tableScrolled table thead {
-    position: sticky;
-    top: -1px;
-    left: 0;
-    z-index: 999;
-  }
-
-  table thead th {
-    background-color: #014e89;
-  }
-  table tbody tr td {
-    font-size: 0.875rem;
-  }
-  tbody tr td:first-child {
-    padding-bottom: 30px;
-    height: 100px;
-  }
   button.modal-button {
     background-color: #ffca09;
     border: 1px solid #ffca09;
@@ -397,8 +252,13 @@ return data; -->
     cursor: pointer;
   }
   .modal-wrapper {
+    padding-top: 20px;
+    padding-bottom: 10px;
     display: grid;
-    grid-template-columns: 0.85fr 1fr;
+    grid-auto-flow: column;
+    justify-content: end;
+    width: 95vw;
+    margin: 0 auto;
   }
   .dropdwn-selection {
     padding-top: 49px;

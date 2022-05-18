@@ -1,5 +1,5 @@
 <script>
-  import { isSearching, fieldID, viewfield } from './store';
+  import { fieldID } from './store';
 
   export let tableheaderData = [
     {
@@ -181,9 +181,16 @@
 
   function onClick(value) {
     $fieldID = value;
-    $viewfield = true;
-    $isSearching = false;
+    //$viewfield = true;
+    // $isSearching = false;
   }
+  import ViewResult from './ViewResult.svelte';
+  import Modal, { bind } from './modal/index.js';
+  import { writable } from 'svelte/store';
+  const modalss = writable(null);
+  const showModaall = () => modalss.set(bind(ViewResult));
+
+  console.log($fieldID);
 </script>
 
 <div class="table-wrapper">
@@ -202,32 +209,48 @@
         </tr>
       </thead>
       <tbody>
-        {#each posts as post (post.id)}
+        {#each posts as post}
           <tr>
+            <!-- on:click={() => onClick(post.id)}  -->
             <td
               >{post.title}
               <button
                 class="hide"
-                class:btn-repo={tableheader.length >= 3}
+                class:btn-repo={tableheader.length >= 5}
                 on:click={() => onClick(post.id)}
               >
                 Preview
-              </button></td
-            >
+              </button>
+
+              <!-- <Modal show={$modalss}>
+                <button
+                  class="hide"
+                  class:btn-repo={tableheader.length >= 3}
+                  on:click={() => onClick(post.id)}
+                  on:click={showModaall}
+                >
+                  Preview
+                </button>
+              </Modal> -->
+            </td>
             {#each tableheader as colsID}
               {#if colsID == 'client-location'}
-                <td>{post.clientLocation}</td>
+                <td class:btn-repo={tableheader.length >= 5}
+                  >{post.clientLocation}</td
+                >
               {:else if colsID == 'product'}
-                <td>{post.product}</td>
+                <td class:btn-repo={tableheader.length >= 5}>{post.product}</td>
               {:else if colsID == 'campaign'}
-                <td>
+                <td class:btn-repo={tableheader.length >= 5}>
                   {#each post.campaign as { label }}<span>{label}</span>
                   {/each}
                 </td>
               {:else if colsID == 'link'}
-                <td><a href={post.link}>{post.link}</a></td>
+                <td class:btn-repo={tableheader.length >= 5}
+                  ><a href={post.link}>{post.link}</a></td
+                >
               {:else if colsID == 'linkUnlocked'}
-                <td
+                <td class:btn-repo={tableheader.length >= 5}
                   ><div class="link-unlock">
                     <a class="cs_linkunlock" href={post.linkUnlocked}
                       >See full-version
@@ -235,17 +258,25 @@
                   </div>
                 </td>
               {:else if colsID == 'pdf'}
-                <td><a href={post.pdf}>{post.pdf}</a></td>
+                <td class:btn-repo={tableheader.length >= 5}
+                  ><a href={post.pdf}>{post.pdf}</a></td
+                >
               {:else if colsID == 'clientHQ'}
-                <td>{post.clientHQ}</td>
+                <td class:btn-repo={tableheader.length >= 5}>{post.clientHQ}</td
+                >
               {:else if colsID == 'target-location'}
-                <td>{post.targetLocation}</td>
+                <td class:btn-repo={tableheader.length >= 5}
+                  >{post.targetLocation}</td
+                >
               {:else if colsID == 'target-industry'}
-                <td>{post.targetIndustry}</td>
+                <td class:btn-repo={tableheader.length >= 5}
+                  >{post.targetIndustry}</td
+                >
               {:else if colsID == 'target-dm'}
-                <td>{post.targetDM}</td>
+                <td class:btn-repo={tableheader.length >= 5}>{post.targetDM}</td
+                >
               {:else if colsID == 'results'}
-                <td>
+                <td class:btn-repo={tableheader.length >= 5}>
                   {#each post.results as { label }}
                     <span>{label}</span>
                   {/each}</td
@@ -382,9 +413,13 @@
   }
   table tbody tr td {
     font-size: 0.875rem;
+    font-family: 'Lora', 'Lato', sans-serif;
   }
   tbody tr td:first-child {
-    padding-bottom: 30px;
-    height: 100px;
+    padding: 0 10px;
+    height: 75px;
+  }
+  td.btn-repo {
+    height: 125px;
   }
 </style>
