@@ -16,16 +16,18 @@
 <div class="wrapper-spacer" />
 <div class="wrapper-bar">
   <Modal show={$modal}>
-    <button class="menubar" on:click={showModal} aria-label="Start search"
-      ><svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="#fff"
-        height="48"
-        width="48"
-        ><path
-          d="M20.5 35.5V33.25H27.5V35.5ZM6.5 14V11.75H41.5V14ZM12.5 24.75V22.5H35.5V24.75Z"
-        /></svg
-      >
+    <button class="menubar" on:click={showModal} aria-label="Start search">
+      <div class="menubarlabel">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#fff"
+          height="48"
+          width="48"
+          ><path
+            d="M20.5 35.5V33.25H27.5V35.5ZM6.5 14V11.75H41.5V14ZM12.5 24.75V22.5H35.5V24.75Z"
+          /></svg
+        ><span class="menulabel">Filters</span>
+      </div>
     </button>
   </Modal>
   <form class="form" on:submit|preventDefault={handleOnSubmit}>
@@ -86,12 +88,24 @@
     grid-template-columns: max-content 370px;
     align-items: center;
     padding: 0;
+    justify-content: end;
   }
   .menubar {
     background: none;
     border: 0;
 
     cursor: pointer;
+  }
+  .menulabel {
+    color: #fff;
+    font-family: 'open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1.3rem;
+  }
+  .menubarlabel {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    align-items: center;
   }
 
   .form {

@@ -8,7 +8,7 @@
   let page = 1;
   let s;
   $: s = $SearchTerm.toLowerCase();
-  $: field = $fields;
+
   async function fetchPosts(page = 1, s) {
     const data = await fetch(`${url}?s=${s}&page=${page}&per_page=10
       `).then((res) => res.json());

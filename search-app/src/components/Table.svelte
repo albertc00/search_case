@@ -235,22 +235,25 @@
             </td>
             {#each tableheader as colsID}
               {#if colsID == 'client-location'}
-                <td class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
                   >{post.clientLocation}</td
                 >
               {:else if colsID == 'product'}
-                <td class:btn-repo={tableheader.length >= 5}>{post.product}</td>
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+                  >{post.product}</td
+                >
               {:else if colsID == 'campaign'}
-                <td class:btn-repo={tableheader.length >= 5}>
-                  {#each post.campaign as { label }}<span>{label}</span>
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}>
+                  {#each post.campaign as { label }}
+                    <span>{label}</span><br />
                   {/each}
                 </td>
               {:else if colsID == 'link'}
-                <td class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
                   ><a href={post.link}>{post.link}</a></td
                 >
               {:else if colsID == 'linkUnlocked'}
-                <td class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
                   ><div class="link-unlock">
                     <a class="cs_linkunlock" href={post.linkUnlocked}
                       >See full-version
@@ -258,27 +261,33 @@
                   </div>
                 </td>
               {:else if colsID == 'pdf'}
-                <td class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
                   ><a href={post.pdf}>{post.pdf}</a></td
                 >
               {:else if colsID == 'clientHQ'}
-                <td class:btn-repo={tableheader.length >= 5}>{post.clientHQ}</td
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+                  >{post.clientHQ}</td
                 >
               {:else if colsID == 'target-location'}
-                <td class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 5}
                   >{post.targetLocation}</td
                 >
               {:else if colsID == 'target-industry'}
-                <td class:btn-repo={tableheader.length >= 5}
+                <td class="table-ind" class:btn-repo={tableheader.length >= 5}
                   >{post.targetIndustry}</td
                 >
               {:else if colsID == 'target-dm'}
-                <td class:btn-repo={tableheader.length >= 5}>{post.targetDM}</td
+                <td class="table-dm" class:btn-repo={tableheader.length >= 5}
+                  >{post.targetDM}</td
                 >
               {:else if colsID == 'results'}
-                <td class:btn-repo={tableheader.length >= 5}>
-                  {#each post.results as { label }}
-                    <span>{label}</span>
+                <td class="table-res" class:btn-repo={tableheader.length >= 5}>
+                  {#each post.results as { label }, index}
+                    <span
+                      >{index == post.results.length - 1
+                        ? label
+                        : `${label}, `}</span
+                    >
                   {/each}</td
                 >
               {/if}
@@ -332,6 +341,14 @@
     background-color: #014e89;
     color: #fff;
   }
+  .table-td {
+    text-align: center;
+  }
+  .table-ind,
+  .table-dm,
+  .table-res {
+    text-align: left;
+  }
 
   tr:hover .hide {
     display: inline-block;
@@ -339,10 +356,15 @@
   tr:hover .hide.btn-repo {
     display: block;
   }
-  table,
-  td {
+  table {
     border: 1px solid rgb(199, 198, 198);
     border-collapse: collapse;
+  }
+
+  table,
+  td {
+    /* border: 1px solid rgb(199, 198, 198); */
+    /* border-collapse: collapse;  */
     margin-bottom: 10px;
     padding: 10px;
     width: 100%;
@@ -351,8 +373,8 @@
   th {
     background-color: #014e89;
     color: white;
-    border: 1px solid rgb(199, 198, 198);
-    border-collapse: collapse;
+    /* border: 1px solid rgb(199, 198, 198); */
+    /* border-collapse: collapse; */
     margin-bottom: 10px;
     padding: 10px;
     font-family: 'Lato', sans-serif;
@@ -421,5 +443,10 @@
   }
   td.btn-repo {
     height: 125px;
+  }
+  tr {
+    border-bottom: 1px solid rgb(199, 198, 198);
+    border-top: 1px solid rgb(199, 198, 198);
+    border-collapse: collapse;
   }
 </style>

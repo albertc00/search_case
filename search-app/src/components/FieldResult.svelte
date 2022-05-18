@@ -30,7 +30,7 @@
       );
 
       const data = await res.json();
-
+      console.log(data);
       return data;
     } else {
       const res = await fetch(
@@ -133,7 +133,8 @@ return data; -->
         {:else if isError}
           <span>Error</span>
         {:else if data?.length}
-          <h2 class="table-label">{data[0].label}</h2>
+          <h2 class="table-label">Case Studies</h2>
+          <h2 class="table-sublabel">By {data[0].label}</h2>
 
           <div class="table-container">
             <div
@@ -185,14 +186,22 @@ return data; -->
   }
   .table-label {
     position: absolute;
-    top: -5.6rem;
-    left: 2.5rem;
+    top: -7.3rem;
+    left: 2.8rem;
     font-family: 'open Sans', sans-serif;
     font-weight: 650;
     font-size: 2rem;
   }
+  .table-sublabel {
+    position: absolute;
+    top: -3.5rem;
+    left: 3rem;
+    font-family: 'open Sans', sans-serif;
+    font-weight: 550;
+    font-size: 1.1rem;
+  }
   .modal {
-    padding: 10px;
+    padding: 8px;
     padding-left: 53rem;
     padding-top: 50px;
   }
@@ -217,7 +226,7 @@ return data; -->
     grid-column-start: 2;
     display: flex;
     justify-content: flex-start;
-    padding-top: 10px;
+    padding-top: 25px;
     padding-left: 20px;
   }
 
@@ -252,7 +261,7 @@ return data; -->
     cursor: pointer;
   }
   .modal-wrapper {
-    padding-top: 20px;
+    /* padding-top: 20px; */
     padding-bottom: 10px;
     display: grid;
     grid-auto-flow: column;

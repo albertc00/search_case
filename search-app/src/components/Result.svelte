@@ -93,6 +93,7 @@
           {:else if isError}
             <span>Error</span>
           {:else if data?.length}
+            <h2 class="table-label">Case Studies</h2>
             <div class="table-container">
               <div
                 class="table-wrapper"
@@ -130,6 +131,14 @@
 <style>
   .top-wrapper {
     background-color: #f7f7f7;
+  }
+  .table-label {
+    position: absolute;
+    top: 5.5rem;
+    left: 3rem;
+    font-family: 'open Sans', sans-serif;
+    font-weight: 650;
+    font-size: 2rem;
   }
   .modal-button {
     display: grid;
@@ -193,7 +202,7 @@
     grid-column-start: 2;
     display: flex;
     justify-content: flex-start;
-    padding-top: 17px;
+    padding-top: 20px;
     padding-left: 25px;
   }
 </style>

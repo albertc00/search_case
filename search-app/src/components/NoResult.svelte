@@ -31,7 +31,7 @@
           <h2 class="heading svelte-19bcstx">No results found.</h2>
 
           <p class="message svelte-19bcstx">
-            You can also try another keyword or filter by your industry below:
+            You can also try another keyword or filter by your industry above
           </p>
         {:else}
           <div class="image-wrapper svelte-19bcstx">
@@ -56,7 +56,7 @@
       </div>
     </form>
   </div>
-  <div class="popular-posts svelte-19bcstx">
+  <!-- <div class="popular-posts svelte-19bcstx">
     <h2 class="heading-sm svelte-19bcstx">Popular Case Studies</h2>
     {#if $queryResult.isFetching}
       <p>Loading...</p>
@@ -102,7 +102,7 @@
         {/each}
       </div>
     {/if}
-  </div>
+  </div> -->
 </div>
 
 <style>
@@ -119,7 +119,7 @@
   }
 
   .wrapper.svelte-19bcstx {
-    padding: 1rem 0.5rem;
+    padding: 5rem 0.5rem;
   }
   .image.svelte-1bsh36o.svelte-1bsh36o {
     display: block;
@@ -162,6 +162,7 @@
     text-align: left;
     color: #231f20;
     padding: 0;
+    text-align: center;
   }
 
   .posts.svelte-if437h {
