@@ -1,5 +1,6 @@
 <script>
   import { Query } from '@sveltestack/svelte-query';
+  import Skeleton from 'svelte-skeleton/Skeleton.svelte';
   import { SearchTerm, selection, fields } from './store';
   let page = 1;
   let s;
@@ -34,7 +35,7 @@
   <div slot="query" let:queryResult>
     <div class="wrapper">
       {#if queryResult.isFetching}
-        <h2>Loading...</h2>
+        <Skeleton height="42" width="180" />
       {:else if queryResult.isError}
         <span>Error</span>
       {:else}

@@ -6,49 +6,62 @@
   const loading = [555, 450, 530, 528, 562, 524, 500, 500, 500, 500];
 </script>
 
-<h2 class="table-label">Case Studies</h2>
-<div class="table-container">
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th> Title </th>
-          <th> PRODUCT OR SERVICE </th>
-          <th> PDF </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- {#each range(begin, end, step) as i} -->
-        {#each loading as load}
-          <tr>
-            <td><Skeleton height="18" width={load} /> </td>
-            <td class="table-td"><Skeleton height="20" width="80" /> </td>
-            <td class="table-td"><Skeleton height="40" width="90" /> </td>
-          </tr>
-        {/each}
-        <!-- {/each} -->
-      </tbody>
-    </table>
+<div class="cntnr">
+  <div class="results">
+    <h2 class="table-label">Case Studies</h2>
+    <div class="table-container">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th> Title </th>
+              <th> PRODUCT OR SERVICE </th>
+              <th> PDF </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- {#each range(begin, end, step) as i} -->
+            {#each loading as load}
+              <tr>
+                <td><Skeleton height="18" width={load} /> </td>
+                <td class="table-td"><Skeleton height="20" width="80" /> </td>
+                <td class="table-td"><Skeleton height="40" width="90" /> </td>
+              </tr>
+            {/each}
+            <!-- {/each} -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="area-2">
+      <LightPaginationNav
+        totalItems={20}
+        pageSize={10}
+        currentPage={1}
+        limit={1}
+        on:setPage={1}
+      />
+    </div>
   </div>
 </div>
-<div class="footer" style="min-height: 35rem; overflow: hidden;" />
 
 <style>
+  .results {
+    height: 45rem;
+    background-color: #f7f7f7;
+  }
   .table-wrapper {
     overflow: scroll;
     width: 95vw;
     max-height: 72vh;
     margin: 0 auto;
     position: absolute;
-    top: 11.35rem;
+    top: -0.2rem;
   }
   .table-container {
     overflow: auto;
     width: 100%;
     margin: auto;
-  }
-  .footer {
-    overflow: hidden;
   }
 
   table,
@@ -102,7 +115,7 @@
   }
   .table-label {
     position: absolute;
-    top: 5.5rem;
+    top: -7.5rem;
     left: 3rem;
     font-family: 'open Sans', sans-serif;
     font-weight: 650;

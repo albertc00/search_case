@@ -22,13 +22,15 @@
   <ul class="checbox-filters">
     {#each selects as { n, id, label } (id)}
       <li class="check-svelte">
-        <input
-          class="checkbox-svelte"
-          type="checkbox"
-          bind:group={$fields}
-          value={n}
-        />
-        <label class="checkbox-label" for={id}> {label} </label>
+        <div class="filters">
+          <input
+            class="checkbox-svelte"
+            type="checkbox"
+            bind:group={$fields}
+            value={n}
+          />
+          <label class="checkbox-label" for={id}> {label} </label>
+        </div>
       </li>
     {/each}
   </ul>
@@ -37,6 +39,12 @@
 <style>
   ul {
     list-style-type: none;
+  }
+  .filters {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    padding: 5px;
   }
 
   .checbox-filters {

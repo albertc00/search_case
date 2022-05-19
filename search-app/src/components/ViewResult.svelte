@@ -16,6 +16,14 @@
       const data = await res.json();
 
       return data;
+    } else if ($fields.length == 0) {
+      const res = await fetch(
+        `${url}?s=${s}&page=${$pages}&per_page=10&fields=7`
+      );
+
+      const data = await res.json();
+
+      return data;
     } else {
       const res = await fetch(
         `${url}?s=${s}&page=${$pages}&per_page=10&fields=${field}`
@@ -72,9 +80,9 @@
                             <h1 class="cs-title">{post.title}</h1>
                           </header>
                           <footer>
-                            <a class="pdf-button" href={post.pdf}
+                            <!-- <a class="pdf-button" href={post.pdf}
                               >DOWNLOAD PDF</a
-                            >
+                            > -->
                           </footer>
                         </div>
                       </section>
@@ -174,9 +182,9 @@
                           </div>
                         </div>
                       </div>
-                      <div class="btn-btm">
+                      <!-- <div class="btn-btm">
                         <a class="pdf-button" href={post.pdf}>DOWNLOAD PDF</a>
-                      </div>
+                      </div> -->
                     </article>
                   </div>
                 </div>

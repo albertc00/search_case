@@ -15,6 +15,8 @@
   import SeeMore from './SeeMore.svelte';
   import MoreFieldResult from './MoreFieldResult.svelte';
   import HomeButton from './HomeButton.svelte';
+  import TableLoading from './TableLoading.svelte';
+  import SearchResult from './SearchResult.svelte';
 
   const queryClient = new QueryClient();
 
@@ -46,7 +48,7 @@
             <SearchForm />
           </div>
         </div>
-        <NoResult />
+        <SearchResult />
       {/if}
       <!-- {:else if $MoreField}
       <MoreFieldResult />
@@ -296,6 +298,7 @@
       </div>
 
       <Result />
+      <!-- <TableLoading /> -->
     {/if}
   </div>
 </QueryClientProvider>

@@ -198,7 +198,6 @@
     <table>
       <thead>
         <tr>
-          <th>Title</th>
           {#each tableheaderData as { id, label } (id)}
             {#each tableheader as colsID}
               {#if colsID == id}
@@ -212,76 +211,74 @@
         {#each posts as post}
           <tr>
             <!-- on:click={() => onClick(post.id)}  -->
-            <td
-              >{post.title}
-              <button
-                class="hide"
-                class:btn-repo={tableheader.length >= 5}
-                on:click={() => onClick(post.id)}
-              >
-                Preview
-              </button>
 
-              <!-- <Modal show={$modalss}>
-                <button
-                  class="hide"
-                  class:btn-repo={tableheader.length >= 3}
-                  on:click={() => onClick(post.id)}
-                  on:click={showModaall}
-                >
-                  Preview
-                </button>
-              </Modal> -->
-            </td>
             {#each tableheader as colsID}
-              {#if colsID == 'client-location'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+              {#if colsID == 'title'}
+                <td class="table-title"
+                  >{post.title}
+                  <button
+                    class="hide"
+                    class:btn-repo={tableheader.length >= 4}
+                    on:click={() => onClick(post.id)}
+                  >
+                    Preview
+                  </button>
+                </td>
+              {:else if colsID == 'client-location'}
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
                   >{post.clientLocation}</td
                 >
               {:else if colsID == 'product'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
                   >{post.product}</td
                 >
               {:else if colsID == 'campaign'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}>
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}>
                   {#each post.campaign as { label }}
                     <span>{label}</span><br />
                   {/each}
                 </td>
               {:else if colsID == 'link'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
-                  ><a href={post.link}>{post.link}</a></td
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
+                  ><a class="cs_linkunlock" href={post.link} target="_blank"
+                    >See Webpage</a
+                  ></td
                 >
               {:else if colsID == 'linkUnlocked'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
                   ><div class="link-unlock">
-                    <a class="cs_linkunlock" href={post.linkUnlocked}
-                      >See full-version
+                    <a
+                      class="cs_linkunlock"
+                      href={post.linkUnlocked}
+                      target="_blank"
+                      >See full version
                     </a>
                   </div>
                 </td>
               {:else if colsID == 'pdf'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
-                  ><a href={post.pdf}>{post.pdf}</a></td
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
+                  ><a class="cs_linkunlock" href={post.pdf} target="_blank"
+                    >See PDF</a
+                  ></td
                 >
               {:else if colsID == 'clientHQ'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
                   >{post.clientHQ}</td
                 >
               {:else if colsID == 'target-location'}
-                <td class="table-td" class:btn-repo={tableheader.length >= 5}
+                <td class="table-td" class:btn-repo={tableheader.length >= 4}
                   >{post.targetLocation}</td
                 >
               {:else if colsID == 'target-industry'}
-                <td class="table-ind" class:btn-repo={tableheader.length >= 5}
+                <td class="table-ind" class:btn-repo={tableheader.length >= 4}
                   >{post.targetIndustry}</td
                 >
               {:else if colsID == 'target-dm'}
-                <td class="table-dm" class:btn-repo={tableheader.length >= 5}
+                <td class="table-dm" class:btn-repo={tableheader.length >= 4}
                   >{post.targetDM}</td
                 >
               {:else if colsID == 'results'}
-                <td class="table-res" class:btn-repo={tableheader.length >= 5}>
+                <td class="table-res" class:btn-repo={tableheader.length >= 4}>
                   {#each post.results as { label }, index}
                     <span
                       >{index == post.results.length - 1
@@ -349,6 +346,11 @@
   .table-res {
     text-align: left;
   }
+
+  /* .table-title:hover {
+    position: absolute;
+    height: 75px;
+  } */
 
   tr:hover .hide {
     display: inline-block;
@@ -441,6 +443,7 @@
     padding: 0 10px;
     height: 75px;
   }
+
   td.btn-repo {
     height: 125px;
   }
@@ -448,5 +451,13 @@
     border-bottom: 1px solid rgb(199, 198, 198);
     border-top: 1px solid rgb(199, 198, 198);
     border-collapse: collapse;
+  }
+  tr:nth-child(even) {
+    background-color: rgb(255, 255, 255);
+  }
+  tbody tr:hover td button:not(.btn-repo) {
+    position: absolute;
+    left: unset !important;
+    top: 15%;
   }
 </style>

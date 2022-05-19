@@ -37,6 +37,7 @@
         type="search"
         name="search"
         spellcheck="true"
+        placeholder="Type keywords to find case studies"
         aria-label="Search case studies"
         bind:value={$SearchTerm}
         required

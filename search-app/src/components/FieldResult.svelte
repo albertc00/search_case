@@ -5,7 +5,7 @@
   import { col } from './SelectColumn';
   import { LightPaginationNav } from './pagination/index.js';
   import NoResult from './NoResult.svelte';
-  import TableLoading from './TableLoading.svelte';
+  import FieldResultLoading from './FieldResultLoading.svelte';
   import Skeleton from 'svelte-skeleton/Skeleton.svelte';
 
   import Modal, { bind } from './modal/index.js';
@@ -90,97 +90,92 @@ return data; -->
 {#if $fieldID > 0}
   <Modal show={modal.set(bind(ViewResult))} />
 {/if}
-<div class="modal-wrapper">
-  <div class="modal">
-    <Selection />
-  </div>
-  <div class="dropdwn-selection">
-    <Modal show={$modal}>
-      <button class="modal-button" on:click={showModal}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="#014e89"
-          height="30"
-          width="35"
-          viewBox="-5 7 55 35"
-          ><path
-            d="M9 39H11.2L35.45 14.75L34.35 13.65L33.25 12.55L9 36.8ZM6 42V35.6L35.4 6.2Q36.25 5.35 37.525 5.375Q38.8 5.4 39.65 6.25L41.8 8.4Q42.65 9.25 42.65 10.5Q42.65 11.75 41.8 12.6L12.4 42ZM39.5 10.45 37.45 8.4ZM35.45 14.75 34.35 13.65 33.25 12.55 35.45 14.75Z"
-          /></svg
-        >
-        <span class="modal-text">Edit Columns</span>
-      </button>
-    </Modal>
-  </div>
-</div>
-
-<Query options={queryOptions}>
-  <div slot="query" let:queryResult={{ data, isFetching, isError }}>
-    <div class="cntnr">
-      <div class="results svelte-fhxlyi">
-        {#if isFetching}
-          <h3><Skeleton height="35" width="350" /></h3>
-          <div class="loading">
-            <div
-              class="table-wrapper"
-              class:tableScrolled={yTop > 50}
-              bind:this={box}
-              on:scroll={parseScroll}
-              on:mousemove={parseScroll}
-            >
-              <TableLoading />
-            </div>
-          </div>
-        {:else if isError}
-          <span>Error</span>
-        {:else if data?.length}
-          <h2 class="table-label">Case Studies</h2>
-          <h2 class="table-sublabel">By {data[0].label}</h2>
-
-          <div class="table-container">
-            <div
-              class="table-wrapper"
-              class:tableScrolled={yTop > 50}
-              bind:this={box}
-              on:scroll={parseScroll}
-              on:mousemove={parseScroll}
-            >
-              <!-- this is table -->
-              <Table
-                tableData={data}
-                tableheaderData={col}
-                tableheader={$cols}
-              />
-              <!-- table helloworld -->
-            </div>
-          </div>
-          {#if $selection > 0}
-            <div class="area-2">
-              <LightPaginationNav
-                totalItems={data[0].total}
-                pageSize={10}
-                currentPage={$pages}
-                limit={1}
-                on:setPage={(e) => ($pages = e.detail.page)}
-              />
-            </div>
-          {/if}
-        {:else}
-          <NoResult />
-        {/if}
-      </div>
+<div class="top-wrapper">
+  <div class="modal-wrapper">
+    <div class="modal">
+      <Selection />
+    </div>
+    <div class="dropdwn-selection">
+      <Modal show={$modal}>
+        <button class="modal-button" on:click={showModal}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#014e89"
+            height="30"
+            width="35"
+            viewBox="-5 7 55 35"
+            ><path
+              d="M9 39H11.2L35.45 14.75L34.35 13.65L33.25 12.55L9 36.8ZM6 42V35.6L35.4 6.2Q36.25 5.35 37.525 5.375Q38.8 5.4 39.65 6.25L41.8 8.4Q42.65 9.25 42.65 10.5Q42.65 11.75 41.8 12.6L12.4 42ZM39.5 10.45 37.45 8.4ZM35.45 14.75 34.35 13.65 33.25 12.55 35.45 14.75Z"
+            /></svg
+          >
+          <span class="modal-text">Edit Columns</span>
+        </button>
+      </Modal>
     </div>
   </div>
-</Query>
+
+  <Query options={queryOptions}>
+    <div slot="query" let:queryResult={{ data, isFetching, isError }}>
+      <div class="cntnr">
+        <div class="results svelte-fhxlyi">
+          {#if isFetching}
+            <div
+              class="table-wrapper"
+              class:tableScrolled={yTop > 50}
+              bind:this={box}
+              on:scroll={parseScroll}
+              on:mousemove={parseScroll}
+            >
+              <FieldResultLoading />
+            </div>
+          {:else if isError}
+            <span>Error</span>
+          {:else if data?.length}
+            <h2 class="table-label">Case Studies</h2>
+            <h2 class="table-sublabel">By {data[0].label}</h2>
+
+            <div class="table-container">
+              <div
+                class="table-wrapper"
+                class:tableScrolled={yTop > 50}
+                bind:this={box}
+                on:scroll={parseScroll}
+                on:mousemove={parseScroll}
+              >
+                <!-- this is table -->
+                <Table
+                  tableData={data}
+                  tableheaderData={col}
+                  tableheader={$cols}
+                />
+                <!-- table helloworld -->
+              </div>
+            </div>
+            {#if $selection > 0}
+              <div class="area-2">
+                <LightPaginationNav
+                  totalItems={data[0].total}
+                  pageSize={10}
+                  currentPage={$pages}
+                  limit={1}
+                  on:setPage={(e) => ($pages = e.detail.page)}
+                />
+              </div>
+            {/if}
+          {:else}
+            <NoResult />
+          {/if}
+        </div>
+      </div>
+    </div>
+  </Query>
+</div>
 
 <style>
-  h3 {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #231f20;
-    line-height: 2.75rem;
-    text-align: center;
+  .top-wrapper {
+    background-color: #f7f7f7;
   }
+
   .cntnr {
     position: relative;
   }
@@ -205,9 +200,7 @@ return data; -->
     padding-left: 53rem;
     padding-top: 50px;
   }
-  .loading {
-    padding-top: 55px;
-  }
+
   .modal-button {
     display: grid;
     grid-template-columns: 0.4fr 1fr;
